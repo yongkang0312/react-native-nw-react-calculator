@@ -1,7 +1,26 @@
-  
 language: node_js
 
+env:
+  global: 
+  - CC_TEST_REPORTER_ID=9eee4c419c484ef175cebc9052af6a845df75a30fc9ee027600696fc7d98453b
+
 node_js:
-  - "11.0"
+  - "14.0.0"
+  - "14.1.0"
+  - "13.0.0"
+  - "12.1.0"
+  - "10.0.0"
+  - "10.1.0"
+  - "11.1.0"
+  - "11.0.0"
+  
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - bundle exec rspec
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 script: npm run travis
